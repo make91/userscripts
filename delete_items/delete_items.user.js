@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         delete_items
-// @version      0.1
+// @version      0.1.1
 // @description  delete unwanted items from the page
 // @match        https://marcuskivi.com/script-test/
 // @grant        GM_addStyle
@@ -10,7 +10,7 @@ window.addEventListener('load', () => {
     addButton();
 })
 function deletePressed(elem){
-    elem.target.parentElement.parentElement.remove();
+    elem.currentTarget.parentElement.remove();
 }
 function createButton() {
     var zNode = document.createElement ('div');
