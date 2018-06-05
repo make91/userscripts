@@ -1,16 +1,40 @@
 // ==UserScript==
 // @name         delete_items
-// @version      0.1.1
+// @version      0.2
 // @description  delete unwanted items from the page
 // @match        https://marcuskivi.com/script-test/
 // @grant        GM_addStyle
 // ==/UserScript==
 window.addEventListener('load', () => {
+    deleteViaStorage();
     addButtonStyle();
-    addButton();
+    addButtons();
 })
+function deleteViaStorage() {
+    if (localStorage.deletedItems && JSON.parse(localStorage.deletedItems).length) {
+        const deletedItems = JSON.parse(localStorage.deletedItems);
+        const select = document.querySelectorAll('h5');
+        select.forEach(ele => {
+            const itemText = ele.textContent;
+            if (deletedItems.includes(itemText)) {
+                console.log("Deleting item " + itemText);
+                ele.parentElement.parentElement.remove();
+            }
+        })
+    }
+}
 function deletePressed(elem){
+    var deleteItem = elem.currentTarget.parentElement.querySelector("h5").textContent;
     elem.currentTarget.parentElement.remove();
+    console.log("Deleting item " + deleteItem);
+    var deletedItems = [];
+    if (localStorage.deletedItems && JSON.parse(localStorage.deletedItems).length) {
+        deletedItems = JSON.parse(localStorage.deletedItems);
+    }
+    if (!deletedItems.includes(deleteItem)) {
+        deletedItems.push(deleteItem);
+        localStorage.deletedItems = JSON.stringify(deletedItems);
+    }
 }
 function createButton() {
     var zNode = document.createElement ('div');
@@ -19,8 +43,8 @@ function createButton() {
     zNode.addEventListener ("click", deletePressed, false);
     return zNode;
 }
-function addButton() {
-    var select = document.querySelectorAll('h5');
+function addButtons() {
+    const select = document.querySelectorAll('h5');
     select.forEach(ele => {
         var zNode = createButton();
         ele.parentElement.parentElement.appendChild (zNode);
