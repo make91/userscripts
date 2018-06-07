@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         lidl_delete_items
-// @version      0.1
+// @version      0.1.1
 // @description  delete unwanted products from the page
 // @include     https://www.lidl.fi/fi/Kaeyttoetavaratarjoukset.htm*
 // @include     https://www.lidl.fi/fi/Ruokatarjoukset.htm*
