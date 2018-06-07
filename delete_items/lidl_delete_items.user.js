@@ -71,5 +71,11 @@ function addButtonStyle() {
 .delete-button-container:hover button {
     opacity: 1;
 }
+.delete-button-container {
+    display: none;
+}
+div.productgrid > ul.productgrid__list > li.productgrid__item:hover .delete-button-container {
+    display: inline;
+}
 `);
 }
