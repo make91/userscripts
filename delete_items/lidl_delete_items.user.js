@@ -1,16 +1,29 @@
 // ==UserScript==
 // @name         lidl_delete_items
-// @version      0.1.1
+// @version      0.1.2
 // @description  delete unwanted products from the page
 // @include     https://www.lidl.fi/fi/Kaeyttoetavaratarjoukset.htm*
 // @include     https://www.lidl.fi/fi/Ruokatarjoukset.htm*
 // @include     https://www.lidl.se/sv/erbjudanden.htm*
 // @grant        GM_addStyle
 // ==/UserScript==
+GM_addStyle (`
+.productgrid {
+    visibility: hidden;
+    opacity: 0;
+}
+`);
 window.addEventListener('load', () => {
     deleteViaStorage();
     addButtonStyle();
     addButtons();
+    GM_addStyle (`
+.productgrid {
+    visibility: inherit!important;
+    opacity: 1;
+    transition: visibility 0s linear 0ms, opacity 600ms;
+}
+`);
 })
 function deleteViaStorage() {
     if (localStorage.deletedItems && JSON.parse(localStorage.deletedItems).length) {
